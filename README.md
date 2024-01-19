@@ -36,19 +36,26 @@ PatterPal is a web application that allows you to practice your speaking skills 
 ## CLC3 Questions
 
 ### Automated Infrastructue Provisioning/(Infrastructure-as-Code). Wie wurde im vorliegenden Projekt Automated Infrastructure Provisioning berücksichtigt?
-
+**Azure App Services:**
+// TODO
 
 ### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
-Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancing ist möglich.
+**Azure App Services:** Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancing ist möglich.
 
-### Ausfallssicherheit.  Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
+### Ausfallssicherheit. Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
+**Azure App Services:**
+// TODO
 
+**Cosmos DB** garantiert auch bei Free Tier eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat
+
+**Azure Speech Services:**
+// TODO
 
 ### NoSql. Welchen Beitrag leistet NoSql in der vorliegenden Problemstellung?
-
+// TODO
 
 ### Replikation. Wo nutzen Sie im gegenständlichen Projekt Daten-Replikation?
-
+// TODO
 
 ### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
 
@@ -60,7 +67,10 @@ Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancin
 * Geschätzter Speicherverbrauch pro Operation (Eintrag einer Interaktion/eines Chats, **sehr größzügig**): 5 KB
 * 1 Jahr Betrieb
 
-**CosmosDb (Region Europe):**
+**Azure App Services:**
+// TODO
+
+**Cosmos DB (Region Europe):**
 * Beispielsrechnung mit https://cosmos.azure.com/capacitycalculator
   * Throughput:
     * Free-Tier: bis 1000 RU/s
@@ -81,7 +91,11 @@ Geschätze Kosten DB: 73.36$/Monat
 
 ![grafik](https://github.com/seventinnine/patter-pal/assets/58472456/ade47b5b-c41f-4aec-8654-68683b8bcfac)
 
+**Azure Speech Services**
+// TODO
 
+**Vorteil gegenüber Nicht-Cloud-Lösung:**
+Keine Hardware-Kosten notwendig Hosten eines DB Servers
 
 ## Project Team
 We are based in Austria and currently studying Software Engineering at the [University of Applied Sciences Upper Austria](https://www.fh-ooe.at/en/hagenberg-campus/).
