@@ -39,7 +39,7 @@ PatterPal is a web application that allows you to practice your speaking skills 
 
 
 ### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
-
+Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancing ist möglich.
 
 ### Ausfallssicherheit.  Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
 
@@ -51,6 +51,36 @@ PatterPal is a web application that allows you to practice your speaking skills 
 
 
 ### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
+
+**Annahme:**
+* 1_000 User pro Tag,
+* Jeder User erstellt täglich:
+  * 5 Konversationen (Chats) mit je
+  * 20 Interaktionen (Sprechen + Antwort vom Service)
+* Geschätzter Speicherverbrauch pro Operation (Eintrag einer Interaktion/eines Chats, **sehr größzügig**): 5 KB
+* 1 Jahr Betrieb
+
+**CosmosDb (Region Europe):**
+* Beispielsrechnung mit https://cosmos.azure.com/capacitycalculator
+  * Throughput:
+    * Free-Tier: bis 1000 RU/s
+    * Request Unit: Normaisierung vom Aufwand von DB Operation, unterschiedliche Anzahl von RU werden verbraucht (https://learn.microsoft.com/en-us/azure/cosmos-db/request-units)
+  * Annahme:
+    * (1_000 * 5 * 20 Creates)/Tag => ~1.2 Creates/Sekunde,
+    * Jedes Create verursacht ~5 Point Reads (1 Item per ID nach dem erstellen wieder raus lesen, see https://devblogs.microsoft.com/cosmosdb/point-reads-versus-queries/ ) => ~6 Point Reads/Sekunde
+    * Annahme: jeder User setzt 10 Queries pro Konversation ab (z.b. Page reload) => 1_000 * 5 Queries/Tag => ~0.2 Queries/Sekunde
+    * ~0.1 Updates/Sekunde (Renamen von Chats),
+    * ~0.2 Deletes/Sekunde (Löschen eines Chats, Löschen aller Daten)
+    * 20% Peak time, mit x5 so viel Requests
+  * Storage:
+    * Free Tier: bis 25 GB
+    * Annahme (1 Jahr Betrieb):
+     * 1.2 Creates/Sekunde * 3600 * 24 = 103_680 Creates/Tag * 31 => 3_214_080 Creates/Monat * 12 => 38_568_960 Creates/Jahr * 5 KB => 192_844_800 KB => ~183 GB => Aufrunden auf 200 GB für 1 Jahr Betrieb
+
+Geschätze Kosten DB: 73.36$/Monat
+
+![grafik](https://github.com/seventinnine/patter-pal/assets/58472456/ade47b5b-c41f-4aec-8654-68683b8bcfac)
+
 
 
 ## Project Team
@@ -114,8 +144,6 @@ When you are done you can use the 🚪 button on the top right to log out.
 *The OpenAi interface is not yet used from Azure (instead platform.openai.com) as it is not currently available for a students' subscription*
 
 ### Data Layer Diagram
-
-
 
 ![Data Layer Diagram](docs/img/datalayer.svg)
 
