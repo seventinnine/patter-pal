@@ -95,7 +95,8 @@ Geschätze Kosten DB: 73.36$/Monat
 // TODO
 
 **Vorteil gegenüber Nicht-Cloud-Lösung:**
-Keine Hardware-Kosten notwendig Hosten eines DB Servers
+Keine Hardware-Kosten notwendig für Hosting eines DB Servers
+// TODO
 
 ## Project Team
 We are based in Austria and currently studying Software Engineering at the [University of Applied Sciences Upper Austria](https://www.fh-ooe.at/en/hagenberg-campus/).
