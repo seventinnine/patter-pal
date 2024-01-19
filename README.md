@@ -42,20 +42,29 @@ PatterPal is a web application that allows you to practice your speaking skills 
 ### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
 **Azure App Services:** Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancing ist möglich.
 
+**Cosmos DB:**
+Skalierbarkeit wurde hier nicht berücksichtigt.
+
 ### Ausfallssicherheit. Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
 **Azure App Services:**
 // TODO
 
-**Cosmos DB** garantiert auch bei Free Tier eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat
+**Cosmos DB:**
+Free Tier garantiert eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat
 
 **Azure Speech Services:**
 // TODO
 
 ### NoSql. Welchen Beitrag leistet NoSql in der vorliegenden Problemstellung?
-// TODO
+
+**Cosmos DB:**
+Grundsätzlich hätte das Datenmodell auch mit einer relationalen Datenbank abgebildet werden können.
+Allerdings lassen sich die Konversationen einfacher und kompakter als Json-Dokument modellieren.
 
 ### Replikation. Wo nutzen Sie im gegenständlichen Projekt Daten-Replikation?
-// TODO
+
+**Cosmos DB:**
+Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikationen garantiert und automatisch managed. 
 
 ### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
 
@@ -70,7 +79,7 @@ PatterPal is a web application that allows you to practice your speaking skills 
 **Azure App Services:**
 // TODO
 
-**Cosmos DB (Region Europe):**
+**Cosmos DB (Region 'West Europe'):**
 * Beispielsrechnung mit https://cosmos.azure.com/capacitycalculator
   * Throughput:
     * Free-Tier: bis 1000 RU/s
