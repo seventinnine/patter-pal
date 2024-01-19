@@ -33,6 +33,26 @@ PatterPal is a web application that allows you to practice your speaking skills 
     <code><img alt="PatterPal" title="PatterPal" width="64" height="64" src="docs/img/logo.svg"/></code>
 </div>
 
+## CLC3 Questions
+
+### Automated Infrastructue Provisioning/(Infrastructure-as-Code). Wie wurde im vorliegenden Projekt Automated Infrastructure Provisioning berücksichtigt?
+
+
+### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
+
+
+### Ausfallssicherheit.  Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
+
+
+### NoSql. Welchen Beitrag leistet NoSql in der vorliegenden Problemstellung?
+
+
+### Replikation. Wo nutzen Sie im gegenständlichen Projekt Daten-Replikation?
+
+
+### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
+
+
 ## Project Team
 We are based in Austria and currently studying Software Engineering at the [University of Applied Sciences Upper Austria](https://www.fh-ooe.at/en/hagenberg-campus/).
 
