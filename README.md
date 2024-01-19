@@ -59,7 +59,7 @@ Free Tier garantiert eine 99.99% Availability (single Region, keine Availability
 
 **Cosmos DB:**
 Grundsätzlich hätte das Datenmodell auch mit einer relationalen Datenbank abgebildet werden können.
-Allerdings lassen sich die Konversationen einfacher und kompakter als Json-Dokument modellieren.
+Allerdings lassen sich die Chats einfacher und kompakter als Json-Dokument modellieren.
 
 ### Replikation. Wo nutzen Sie im gegenständlichen Projekt Daten-Replikation?
 
@@ -68,10 +68,10 @@ Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikatione
 
 ### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
 
-**Annahme:**
-* 1_000 User pro Tag,
+**(Sehr bei den Haaren herbeigezogene) Annahme:**
+* 1000 User pro Tag,
 * Jeder User erstellt täglich:
-  * 5 Konversationen (Chats) mit je
+  * 5 Chats mit je
   * 20 Interaktionen (Sprechen + Antwort vom Service)
 * Geschätzter Speicherverbrauch pro Operation (Eintrag einer Interaktion/eines Chats, **sehr größzügig**): 5 KB
 * 1 Jahr Betrieb
@@ -85,16 +85,16 @@ Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikatione
     * Free-Tier: bis 1000 RU/s
     * Request Unit: Normaisierung vom Aufwand von DB Operation, unterschiedliche Anzahl von RU werden verbraucht (https://learn.microsoft.com/en-us/azure/cosmos-db/request-units)
   * Annahme:
-    * (1_000 * 5 * 20 Creates)/Tag => ~1.2 Creates/Sekunde,
+    * `1000 * 5 * 20 Creates/Tag` => ~1.2 Creates/Sekunde,
     * Jedes Create verursacht ~5 Point Reads (1 Item per ID nach dem erstellen wieder raus lesen, see https://devblogs.microsoft.com/cosmosdb/point-reads-versus-queries/ ) => ~6 Point Reads/Sekunde
-    * Annahme: jeder User setzt 10 Queries pro Konversation ab (z.b. Page reload) => 1_000 * 5 Queries/Tag => ~0.2 Queries/Sekunde
+    * Annahme: jeder User setzt 10 Queries pro Chat ab (z.b. Page reload) => `1000 * 5 Queries/Tag` => ~0.2 Queries/Sekunde
     * ~0.1 Updates/Sekunde (Renamen von Chats),
     * ~0.2 Deletes/Sekunde (Löschen eines Chats, Löschen aller Daten)
     * 20% Peak time, mit x5 so viel Requests
   * Storage:
     * Free Tier: bis 25 GB
     * Annahme (1 Jahr Betrieb):
-     * 1.2 Creates/Sekunde * 3600 * 24 = 103_680 Creates/Tag * 31 => 3_214_080 Creates/Monat * 12 => 38_568_960 Creates/Jahr * 5 KB => 192_844_800 KB => ~183 GB => Aufrunden auf 200 GB für 1 Jahr Betrieb
+     * `1.2 Creates/Sekunde * 3600 * 24 = 103'680 Creates/Tag * 31` => `3'214'080 Creates/Monat * 12` => `38'568'960 Creates/Jahr * 5 KB` => `192'844'800 KB` => ~183 GB => Aufrunden auf 200 GB für 1 Jahr Betrieb
 
 Geschätze Kosten DB: 73.36$/Monat
 
