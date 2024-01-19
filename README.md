@@ -93,7 +93,7 @@ Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikatione
     * 20% Peak time, mit x5 so viel Requests
   * Storage:
     * Free Tier: bis 25 GB
-    * Annahme (1 Jahr Betrieb):
+    * Annahme:
      * `1.2 Creates/Sekunde * 3600 * 24` => `103'680 Creates/Tag * 31` => `3'214'080 Creates/Monat * 12` => `38'568'960 Creates/Jahr * 5 KB` => `192'844'800 KB` => ~183 GB => Aufrunden auf 200 GB für 1 Jahr Betrieb
 
 Geschätze Kosten DB: 73.36$/Monat
