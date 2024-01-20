@@ -34,6 +34,7 @@ PatterPal is a web application that allows you to practice your speaking skills 
 </div>
 
 ## CLC3 Questions
+Diese Sektion wurde auf Deutsch für die Lehrveranstaltung CLC3 verfasst.
 
 ### Automated Infrastructue Provisioning/(Infrastructure-as-Code). Wie wurde im vorliegenden Projekt Automated Infrastructure Provisioning berücksichtigt?
 Die Azure Ressourcen-Gruppen-Konfiguration kann jederzeit exportiert und importiert werden. Dies erlaubt ein einfaches Neuaufsetzen des Projekts auch auf verschiedenen Azure Accounts.
