@@ -36,48 +36,53 @@ PatterPal is a web application that allows you to practice your speaking skills 
 ## CLC3 Questions
 
 ### Automated Infrastructue Provisioning/(Infrastructure-as-Code). Wie wurde im vorliegenden Projekt Automated Infrastructure Provisioning berücksichtigt?
+Die Azure Ressourcen-Gruppen-Konfiguration kann jederzeit exportiert und importiert werden. Dies erlaubt ein einfaches Neuaufsetzen des Projekts auch auf verschiedenen Azure Accounts.
+
 **Azure App Services:**
-// TODO
+Das Projekt wird durch eine automatisierte GitHub-Actions-Pipeline bei Merges auf Production auf den Azure App Service geladen. 
 
 ### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
-**Azure App Services:** Implementiertes Backend ist zustandslos => mehrfaches Deployment + load balancing ist möglich.
-
-**Cosmos DB:**
-Skalierbarkeit wurde hier nicht berücksichtigt.
+**Azure App Services:** Implementiertes Backend ist zustandslos => mehrfaches Deployment + Load-Balancing ist möglich. Scale up & out.
+**Cosmos DB:** Würde auch mehrere Methoden zur Skalierung anbieten. Die Request Units (RUs) könnten theoretisch automatisch nach Auslastung skaliert werden.   
 
 ### Ausfallssicherheit. Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
-**Azure App Services:**
-// TODO
-
-**Cosmos DB:**
-Free Tier garantiert eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat
-
-**Azure Speech Services:**
-// TODO
+**Azure App Services:** Kein SLA im Free-Tier, bei B1 99.95% Availability. Die App kann auch in verschiedenen Regionen Deployments haben.  
+**Cosmos DB:** Free Tier garantiert eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat. Zusätzlich können die Daten zu mehreren Azure-Regions repliziert werden.  
+**Speech Servies, Google-Authentifizierung & OpenAi**: Sind alles externe Dienste, die eigene Maßnahmen zur Ausfallsicherheit bereits implementieren. Theoretisch könnte auch hier auf mehrere Azure-Regions/Endpunkte zurückgegriffen werden.
 
 ### NoSql. Welchen Beitrag leistet NoSql in der vorliegenden Problemstellung?
 
 **Cosmos DB:**
 Grundsätzlich hätte das Datenmodell auch mit einer relationalen Datenbank abgebildet werden können.
-Allerdings lassen sich die Chats einfacher und kompakter als Json-Dokument modellieren.
+Allerdings lassen sich die Chats einfacher und kompakter als JSON-Dokument modellieren. Es werden dadurch Table-Joins vermieden und schnelle Queries gewährleistet.    
+Zusätzlich haben wir die Flexibilität genutzt und verschiedene Typen in einem DB-Container gespeichert um Mehrkosten eines zusätzlichen Containers zu meiden. 
 
 ### Replikation. Wo nutzen Sie im gegenständlichen Projekt Daten-Replikation?
 
 **Cosmos DB:**
-Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikationen garantiert und automatisch managed. 
+Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikationen garantiert und automatisch verwaltet. 
 
 ### Kosten. Welche Kosten verursacht Ihre Lösung? Welchen monetären Vorteil hat diese Lösung gegenüber einer Nicht-Cloud-Lösung?
 
-**(Sehr bei den Haaren herbeigezogene) Annahme:**
-* 1000 User pro Tag,
+**Theoretische Annahme:**
+* 1000 (Power-)User pro Tag,
 * Jeder User erstellt täglich:
   * 5 Chats mit je
   * 20 Interaktionen (Sprechen + Antwort vom Service)
+  * mit einer Input-Sprechlänge von je 10 Sekunden + 20 Sekunden Antwort
+  * ~1 Sekunde = 5 Zeichen Text
 * Geschätzter Speicherverbrauch pro Operation (Eintrag einer Interaktion/eines Chats, **sehr größzügig**): 5 KB
 * 1 Jahr Betrieb
 
-**Azure App Services:**
-// TODO
+**Azure App Services (Region 'West Europe'):**  
+Abhängig von der Auslastung könnte zwischen den Basis- bzw. Premium-Plänen entschieden werden.
+* `1000 * 20 * 5 = 100.000` Requests pro Tag
+* Als Beispiel nehmen wir B2 für ein wenig mehr RAM und 2 Cores.
+
+Geschätzte Kosten App-Services: 109.50$/Monat (B2)
+
+![Kosten App Service](https://github.com/seventinnine/patter-pal/assets/18032233/63ffa667-5e58-48ef-aa9e-d04a7d7653e8)
+
 
 **Cosmos DB (Region 'West Europe'):**
 * Beispielsrechnung mit https://cosmos.azure.com/capacitycalculator
@@ -98,14 +103,49 @@ Für den physischer Speicher vom Cosmos DB Container werden mind. 4 Replikatione
 
 Geschätze Kosten DB: 73.36$/Monat
 
-![grafik](https://github.com/seventinnine/patter-pal/assets/58472456/ade47b5b-c41f-4aec-8654-68683b8bcfac)
+![Kosten Cosmos DB](https://github.com/seventinnine/patter-pal/assets/58472456/ade47b5b-c41f-4aec-8654-68683b8bcfac)
 
-**Azure Speech Services**
-// TODO
+**Azure Speech Services:**
+* `100.000 / 2` Sprach-Input & Antworten 
+* Speech to Text
+  * `1.600 + 480 (extra Features Pronounciation etc.) = 2.080$/2.000 Stunden`
+  * `50.000 * 10 = 500.000 Sekunden-Input/Tag / 60 / 60 = 138 Stunden/Tag ~= 4.000 Stunden/Monat`
+  * `2 * 2.080 = 4.160$ Monat`
+* Text to Speech
+  * 1.024$ per 80 Millionen Zeichen
+  * `50.000 * 20 * 5 = 5.000.000 Zeichen/Tag ~= 150.000.000 Zeichen/Monat`
+  * `150 / 80 * 1.024 ~= 1.900$ Monat`
+
+Geschätzte Kosten Speech Services: 6.060$/Monat.
+
+![Kosten STT](https://github.com/seventinnine/patter-pal/assets/18032233/b9092969-6038-41bd-b554-ca6c4a468084)
+
+![Kosten TTS](https://github.com/seventinnine/patter-pal/assets/18032233/81b84eb6-c249-4227-9058-080b92061b50)
+
+**OpenAI**
+* Annahme 1 Token ~5 Zeichen (Unterschätzung, damit es gleich ist mit Zeichen/Sekunde)
+* Input
+  * `50.000 * 10 = 500.000 Tokens/Tag Input`
+  * `0.001$ pro 1.000 Tokens Input`
+  * `0.001 * 500 = 0,5$ Tag ~= 15$/Monat`
+* Output
+  * `50.000 * 20 = 1.000.000 Tokens/Tag Output`
+  * `0.002$ pro 1.000 Tokens Output`
+  * `0.002 * 1.000 = 2$ Tag ~= 60$/Monat`
+ 
+Geschätzte Kosten OpenAI: 85$/Monat.
+
+![Kosten OpenAi](https://github.com/seventinnine/patter-pal/assets/18032233/5f41f71c-7be3-46bc-83d5-c5ede45e59d9)
+
+**Gesamtkosten im Monat (grob): ca. 6.400$**  
+So würde ein Abo für diesen Dienst für ein Break-Even rund *6,5$/Monat* kosten.
 
 **Vorteil gegenüber Nicht-Cloud-Lösung:**
-Keine Hardware-Kosten notwendig für Hosting eines DB Servers
-// TODO
+* Keine Hardware-Kosten notwendig für das Hosting der Services
+* Kein selbst Trainieren/Hosten der Speech-Services und Large-Language-Models
+* Einfache Skalierbarkeit (Scale out & up) ohne zusätzliche Hardware zu erwerben und warten zu müssen
+* Schnelles Aufsetzen/Löschen von Ressourcen
+* Ausfallsicherheit durch SLA
 
 ## Project Team
 We are based in Austria and currently studying Software Engineering at the [University of Applied Sciences Upper Austria](https://www.fh-ooe.at/en/hagenberg-campus/).
