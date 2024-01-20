@@ -34,7 +34,7 @@ PatterPal is a web application that allows you to practice your speaking skills 
 </div>
 
 ## CLC3 Questions
-Diese Sektion wurde auf Deutsch für die Lehrveranstaltung CLC3 verfasst.
+This section will be written in German for the course CLC3.
 
 ### Automated Infrastructue Provisioning/(Infrastructure-as-Code). Wie wurde im vorliegenden Projekt Automated Infrastructure Provisioning berücksichtigt?
 Die Azure Ressourcen-Gruppen-Konfiguration kann jederzeit exportiert und importiert werden. Dies erlaubt ein einfaches Neuaufsetzen des Projekts auch auf verschiedenen Azure Accounts.
@@ -43,13 +43,23 @@ Die Azure Ressourcen-Gruppen-Konfiguration kann jederzeit exportiert und importi
 Das Projekt wird durch eine automatisierte GitHub-Actions-Pipeline bei Merges auf Production auf den Azure App Service geladen. 
 
 ### Skalierbarkeit. Wie wurde im vorliegenden Projekt Skalierbarkeit berücksichtigt?
-**Azure App Services:** Implementiertes Backend ist zustandslos => mehrfaches Deployment + Load-Balancing ist möglich. Scale up & out.
-**Cosmos DB:** Würde auch mehrere Methoden zur Skalierung anbieten. Die Request Units (RUs) könnten theoretisch automatisch nach Auslastung skaliert werden.   
+
+**Azure App Services:**
+Implementiertes Backend ist zustandslos => mehrfaches Deployment + Load-Balancing ist möglich. Scale up & out.
+
+**Cosmos DB:**
+Würde auch mehrere Methoden zur Skalierung anbieten. Die Request Units (RUs) könnten theoretisch automatisch nach Auslastung skaliert werden.
 
 ### Ausfallssicherheit. Wie wurde im vorliegenden Projekt Ausfallssicherheit berücksichtigt?
-**Azure App Services:** Kein SLA im Free-Tier, bei B1 99.95% Availability. Die App kann auch in verschiedenen Regionen Deployments haben.  
-**Cosmos DB:** Free Tier garantiert eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat. Zusätzlich können die Daten zu mehreren Azure-Regions repliziert werden.  
-**Speech Servies, Google-Authentifizierung & OpenAi**: Sind alles externe Dienste, die eigene Maßnahmen zur Ausfallsicherheit bereits implementieren. Theoretisch könnte auch hier auf mehrere Azure-Regions/Endpunkte zurückgegriffen werden.
+
+**Azure App Services:**
+Kein SLA im Free-Tier, bei B1 99.95% Availability. Die App kann auch in verschiedenen Regionen Deployments haben.
+
+**Cosmos DB:**
+Free Tier garantiert eine 99.99% Availability (single Region, keine Availability-Zone) => ~4 Minuten 20 Sekunden Downtime pro Monat. Zusätzlich können die Daten zu mehreren Azure-Regions repliziert werden.
+
+**Speech Servies, Google-Authentifizierung & OpenAi**:
+Sind alles externe Dienste, die eigene Maßnahmen zur Ausfallsicherheit bereits implementieren. Theoretisch könnte auch hier auf mehrere Azure-Regions/Endpunkte zurückgegriffen werden.
 
 ### NoSql. Welchen Beitrag leistet NoSql in der vorliegenden Problemstellung?
 
@@ -83,7 +93,6 @@ Abhängig von der Auslastung könnte zwischen den Basis- bzw. Premium-Plänen en
 Geschätzte Kosten App-Services: 109.50$/Monat (B2)
 
 ![Kosten App Service](https://github.com/seventinnine/patter-pal/assets/18032233/63ffa667-5e58-48ef-aa9e-d04a7d7653e8)
-
 
 **Cosmos DB (Region 'West Europe'):**
 * Beispielsrechnung mit https://cosmos.azure.com/capacitycalculator
