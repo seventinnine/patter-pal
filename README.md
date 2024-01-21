@@ -133,22 +133,22 @@ Geschätzte Kosten Speech Services: 6.060$/Monat.
 ![Kosten TTS](https://github.com/seventinnine/patter-pal/assets/18032233/81b84eb6-c249-4227-9058-080b92061b50)
 
 **OpenAI**
-* Annahme 1 Token ~5 Zeichen (Unterschätzung, damit es gleich ist mit Zeichen/Sekunde)
+* Annahme ein Request hat ungefähr 300 Tokens (mit Chat History), eine Antwort hat laut unserer Config maximal 256, zur Berechnung nehmen wir 200.
 * Input
-  * `50.000 * 10 = 500.000 Tokens/Tag Input`
+  * `50.000 * 300 = 15.000.000 Tokens/Tag Input`
   * `0.001$ pro 1.000 Tokens Input`
-  * `0.001 * 500 = 0,5$ Tag ~= 15$/Monat`
+  * `0.001 * 15.000 = 15$ Tag ~= 450$/Monat`
 * Output
-  * `50.000 * 20 = 1.000.000 Tokens/Tag Output`
+  * `50.000 * 200 = 10.000.000 Tokens/Tag Output`
   * `0.002$ pro 1.000 Tokens Output`
-  * `0.002 * 1.000 = 2$ Tag ~= 60$/Monat`
+  * `0.002 * 10.000 = 20$ Tag ~= 600$/Monat`
  
-Geschätzte Kosten OpenAI: 85$/Monat.
+Geschätzte Kosten OpenAI: 1050$/Monat.
 
 ![Kosten OpenAi](https://github.com/seventinnine/patter-pal/assets/18032233/5f41f71c-7be3-46bc-83d5-c5ede45e59d9)
 
-**Gesamtkosten im Monat (grob): ca. 6.400$**  
-So würde ein Abo für diesen Dienst für ein Break-Even rund *6,5$/Monat* kosten.
+**Gesamtkosten im Monat (grob): ca. 7.400$**  
+So würde ein Abo für diesen Dienst für ein Break-Even rund *7,5$/Monat* kosten.
 
 **Vorteil gegenüber Nicht-Cloud-Lösung:**
 * Keine Hardware-Kosten notwendig für das Hosting der Services
